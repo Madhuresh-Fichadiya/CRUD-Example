@@ -30,7 +30,6 @@ Here we have created a state list page to display data
         <hr />
         <table class="table">
             <asp:Repeater runat="server" ID="rptStateList">
-
                 <HeaderTemplate>
                     <tr>
                         <th scope="col">Country Name</th>
