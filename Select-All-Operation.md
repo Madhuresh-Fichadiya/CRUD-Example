@@ -63,7 +63,7 @@ protected void Page_Load(object sender, EventArgs e)
 
 private void getStateData()
 {
-    SqlConnection obj = new SqlConnection(ConfigurationManager.ConnectionStrings["ABConnection"].ToString());
+    SqlConnection objConn = new SqlConnection("Data Source=YourSQLServerName; Initial Catalog=YourDBName; Integrated Security=true;");
     obj.Open();
     //2. Create Commond
 
