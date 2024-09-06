@@ -6,13 +6,14 @@
 ```sql
 CREATE PROC [dbo].[PR_State_SelectAll]
 AS
-SELECT [dbo].[State].[StateID]
-	  ,[dbo].[State].CountryID
-	  ,[dbo].[Country].[CountryName]
-    ,[dbo].[State].[StateName]
-    ,[dbo].[State].[StateCode]
-    ,[dbo].[State].[CreationDate]
-    ,[dbo].[State].[ModificationDate]
+SELECT
+	 [dbo].[State].[StateID]
+	,[dbo].[State].CountryID
+	,[dbo].[Country].[CountryName]
+	,[dbo].[State].[StateName]
+	,[dbo].[State].[StateCode]
+	,[dbo].[State].[CreationDate]
+	,[dbo].[State].[ModificationDate]
 FROM [dbo].[State]
 
 INNER JOIN [dbo].[Country]
