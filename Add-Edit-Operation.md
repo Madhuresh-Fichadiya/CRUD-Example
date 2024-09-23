@@ -86,8 +86,13 @@ protected void Page_Load(object sender, EventArgs e)
     if (!Page.IsPostBack)
     {
         FillCountryDropDown();
+ 	if (Request.QueryString["StateID"] != null)
+	{
+		AddEditRecord(Convert.ToInt32(Request.QueryString["StateID"].ToString()));
+	}
     }
 }
+
 protected void btnSave_Click(object sender, EventArgs e)
 {
     try
@@ -101,20 +106,26 @@ protected void btnSave_Click(object sender, EventArgs e)
         StateCode = Convert.ToInt32(txtStateCode.Text.Trim());
         CountryID = Convert.ToInt32(ddlCountry.SelectedValue);
 
-        //Step 1: Create DB Connection
         SqlConnection objConn = new SqlConnection("Data Source=DESKTOP-SJ5GNSA; Initial Catalog=AddressBookDB; Integrated Security=true;");
         objConn.Open();
 
-        //2. Create Commond and Pass parameteres to SP
         SqlCommand objCmd = objConn.CreateCommand();
         objCmd.CommandType = CommandType.StoredProcedure;
-        objCmd.CommandText = "PR_State_Insert";
         objCmd.Parameters.AddWithValue("@StateName",StateName);
         objCmd.Parameters.AddWithValue("@CountryID",CountryID);
         objCmd.Parameters.AddWithValue("@StateCode",StateCode);
         objCmd.Parameters.AddWithValue("@ModificationDate",ModificationDate);
 
-        //3. Insert Data
+	if (Request.QueryString["StateID"].ToString() != null)
+        {
+        	objCmd.CommandText = "PR_State_UpdateByPK";
+		objCmd.Parameters.AddWithValue("@StateID", Convert.ToInt32(Request.QueryString["StateID"].ToString()));
+	}
+	else
+	{
+		objCmd.CommandText = "PR_State_Insert";
+	}
+
         if (objCmd.ExecuteNonQuery() > 0)
         {
             lblMessage.Text = "Record Inserted";
@@ -157,5 +168,6 @@ private void ClearControls()
 {
     txtStateName.Text = String.Empty;
     txtStateCode.Text = String.Empty;
+    ddlCountry.SelectedIndex = 0;
 }
 ```
