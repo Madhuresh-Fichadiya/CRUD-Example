@@ -60,6 +60,10 @@ protected void rptStateList_ItemCommand(object source, RepeaterCommandEventArgs 
             lblMessage.Text = ex.Message.ToString();
         }
     }
+    if(e.CommmandName == "Edit")
+    {
+        Response.Redirect("~/StateAddEdit.aspx?StateID=" + e.CommandArgument);
+    }
 }
 ```
 
